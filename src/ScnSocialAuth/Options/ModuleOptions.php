@@ -177,6 +177,16 @@ class ModuleOptions extends AbstractOptions
      */
     protected $socialLoginOnly = false;
 
+	/**
+	 * @var boolean
+	 */
+	protected $debugMode = false;
+
+	/**
+	 * @var string
+	 */
+	protected $debugFile = false;
+	
     /**
      * get an array of enabled providers
      *
@@ -907,4 +917,50 @@ class ModuleOptions extends AbstractOptions
     {
         return $this->socialLoginOnly;
     }
+
+	/**
+	 * set debug mode
+	 *
+	 * @param  bool       $debugMode
+	 * @return ModuleOptions
+	 */
+	public function setDebugMode($debugMode)
+	{
+		$this->debugMode = (bool) $debugMode;
+
+		return $this;
+	}
+
+	/**
+	 * get debug mode
+	 *
+	 * @return boolean
+	 */
+	public function getDebugMode()
+	{
+		return $this->debugMode;
+	}
+
+	/**
+	 * set debug file
+	 *
+	 * @param  string       $debugFile
+	 * @return ModuleOptions
+	 */
+	public function setDebugFile($debugFile)
+	{
+		$this->debugFile = (string) $debugFile;
+
+		return $this;
+	}
+
+	/**
+	 * get debug file
+	 *
+	 * @return string
+	 */
+	public function getDebugFile()
+	{
+		return $this->debugFile;
+	}
 }
