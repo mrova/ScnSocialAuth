@@ -105,6 +105,8 @@ class HybridAuthFactory implements FactoryInterface
                         ),
                     ),
                 ),
+				'debug_mode' => $options->getDebugMode(),
+				'debug_file' => $options->getDebugFile()
             )
         );
 
