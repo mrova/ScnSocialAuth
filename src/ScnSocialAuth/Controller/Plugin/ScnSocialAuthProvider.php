@@ -2,18 +2,19 @@
 
 namespace ScnSocialAuth\Controller\Plugin;
 
+use ScnSocialAuth\Controller\Exception as ControllerException;
 use ScnSocialAuth\Mapper\UserProviderInterface;
 use Zend\Mvc\Controller\Plugin\AbstractPlugin;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\ServiceManagerAwareInterface;
+use Zend\ServiceManager\ServiceManager;
 use ZfcUser\Entity\UserInterface;
 
-class ScnSocialAuthProvider extends AbstractPlugin implements ServiceLocatorAwareInterface
+class ScnSocialAuthProvider extends AbstractPlugin implements ServiceManagerAwareInterface
 {
     /**
-     * @var ServiceLocator
+     * @var ServiceManager
      */
-    protected $serviceLocator;
+    protected $serviceManager;
 
     /**
      * @var UserProviderInterface
@@ -64,7 +65,7 @@ class ScnSocialAuthProvider extends AbstractPlugin implements ServiceLocatorAwar
     public function getMapper()
     {
         if (!$this->mapper instanceof UserProviderInterface) {
-            $this->setMapper($this->getServiceLocator()->get('ScnSocialAuth-UserProviderMapper'));
+            $this->setMapper($this->getServiceManager()->get('ScnSocialAuth-UserProviderMapper'));
         }
 
         return $this->mapper;
@@ -73,20 +74,24 @@ class ScnSocialAuthProvider extends AbstractPlugin implements ServiceLocatorAwar
     /**
      * Retrieve service manager instance
      *
-     * @return ServiceLocator
+     * @return ServiceManager
      */
-    public function getServiceLocator()
+    public function getServiceManager()
     {
-        return $this->serviceLocator->getServiceLocator();
+        if (!$this->serviceManager instanceof ServiceManager) {
+            throw new ControllerException\RuntimeException('ScnSocialAuthProvider plugin expects an ServiceManager to be injected');
+        }
+        return $this->serviceManager->getServiceLocator();
     }
 
     /**
-     * Set service locator
+     * Set service manager instance
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceManager $locator
+     * @return void
      */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    public function setServiceManager(ServiceManager $serviceManager)
     {
-        $this->serviceLocator = $serviceLocator;
+        $this->serviceManager = $serviceManager;
     }
 }
