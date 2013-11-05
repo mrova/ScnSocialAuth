@@ -140,6 +140,16 @@ $settings = array(
      */
     //'social_login_only' => false,
 
+	/**
+	 * Set to true if you want to enable logging, set 'debug_mode' to true  then provide a writable file by the web server on "debug_file"
+	 */
+	'debug_mode' => false,
+
+	/**
+	 * if 'debug_mode' is true then provide a writable file by the web server
+	 */
+	'debug_file' => null
+	
     /**
      * End of ScnSocialAuth configuration
      */
