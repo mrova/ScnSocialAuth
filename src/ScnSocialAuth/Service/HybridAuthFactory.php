@@ -33,8 +33,6 @@ class HybridAuthFactory implements FactoryInterface
 
 		$hybridAuth = new Hybrid_Auth(
 			array(
-				'debug_mode' => true,
-				'debug_file' => '/var/www/terazteatr.pl/data/ha.log',
 				'base_url' => $baseUrl,
 				'providers' => array(
 					'Facebook' => array(
@@ -107,6 +105,8 @@ class HybridAuthFactory implements FactoryInterface
 						),
 					),
 				),
+				'debug_mode' => $options->getDebugMode(),
+				'debug_file' => $options->getDebugFile()
 			)
 		);
 
