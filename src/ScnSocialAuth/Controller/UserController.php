@@ -116,6 +116,9 @@ class UserController extends AbstractActionController
 		}
 		$viewModel->setVariable('redirect', $redirect);
 
+		$this->_setupTitle('Logowanie');
+		$this->_setupDescription('Najlepsza baza teatrów w Polsce. Zobacz teatry w swoim mieście. Sprawdź repertuar. Oceń je.');
+
 		return $viewModel;
 	}
 
@@ -145,6 +148,9 @@ class UserController extends AbstractActionController
 			$redirect = $this->getRequest()->getQuery()->get('redirect');
 		}
 		$viewModel->setVariable('redirect', $redirect);
+
+		$this->_setupTitle('Rejestracja');
+		$this->_setupDescription('Najlepsza baza teatrów w Polsce. Zobacz teatry w swoim mieście. Sprawdź repertuar. Oceń je.');
 
 		return $viewModel;
 	}
@@ -228,5 +234,23 @@ class UserController extends AbstractActionController
 		}
 
 		return $this->options;
+	}
+
+
+	protected function _setupTitle($title, $defaultTitle = 'TerazTeatr', $separator = ' | ')
+	{
+		$headTitle = $this->getServiceLocator()->get('viewHelperManager')->get('headTitle');
+		$headTitle->setSeparator($separator);
+		if (!empty($title)) {
+			$headTitle->append($title);
+		}
+		if (!empty($defaultTitle)) {
+			$headTitle->append($defaultTitle);
+		}
+	}
+
+	protected function _setupDescription($description)
+	{
+		$this->getServiceLocator()->get('viewHelperManager')->get('headMeta')->appendName('description', $description);
 	}
 }
